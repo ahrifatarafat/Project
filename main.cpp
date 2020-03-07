@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 #include<graphics.h>
 #include<string.h>
+#include<conio.h>
 using namespace std;
 void interfac();
 int main()
@@ -62,7 +63,8 @@ int main()
         {
             j=abs((++j)%9);
         }
-        scanf("%c%*c",&input);
+        input=_getch();
+        printf("value of key = %d\n",input);
 
         if((input == 'a')||(input == 's')||(input=='d')||(input=='w'))
         {
@@ -70,11 +72,14 @@ int main()
             prevj=j;
             if(input == 'a')
             {
-                j=abs((--j)%9);
+                --j;
                 while(validity_grid[i][j])
-                    {
-                        j=(9-(++j))%9;
-                    }
+                   {
+                     if(j>0)
+                        j--;
+                     else if(j==0)
+                            j=8;
+                   }
             }
             else if(input == 's')
             {
@@ -120,6 +125,7 @@ int main()
         }
         if(grid[i][j]==0)
             outtextxy(x+(j*40),y+(i*40),"  ");
+
     }
     delay(200000000);
 
