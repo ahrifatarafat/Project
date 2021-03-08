@@ -1,9 +1,9 @@
 #include<bits/stdc++.h>
 #include<graphics.h>
 #include<string.h>
+#include<conio.h>
 using namespace std;
 void interfac();
-
 int main()
 {
     char input;
@@ -34,16 +34,18 @@ int main()
     };
     int gd = DETECT,gm;
     initgraph(&gd,&gm," ");
-
     interfac();
 
     int x=30,y=30;
+    setcolor(WHITE);
     for(int i=0; i<9; i++)
     {
         for(int j=0; j<9; j++)
         {
             if(grid[i][j]!=0&&grid[i][j]!=-1)
             {
+                setcolor(LIGHTGREEN);
+                settextstyle(4,HORIZ_DIR,1);
                 sprintf(put,"%d",grid[i][j]);
                 outtextxy(x+(j*40),y+(i*40),put);
             }
@@ -51,7 +53,7 @@ int main()
                 outtextxy(x+(j*40),y+(i*40)," ");
         }
     }
-
+    setcolor(WHITE);
     int i=0,j=0;
     int temp=0,previ=0,prevj=0,cursor_flag=0;
 
@@ -61,7 +63,8 @@ int main()
         {
             j=abs((++j)%9);
         }
-        scanf("%c%*c",&input);
+        input=_getch();
+        printf("value of key = %d\n",input);
 
         if((input == 'a')||(input == 's')||(input=='d')||(input=='w'))
         {
@@ -69,9 +72,14 @@ int main()
             prevj=j;
             if(input == 'a')
             {
-                j=abs((--j)%9);
+                --j;
                 while(validity_grid[i][j])
-                    j=abs((--j)%9);
+                   {
+                     if(j>0)
+                        j--;
+                     else if(j==0)
+                            j=8;
+                   }
             }
             else if(input == 's')
             {
@@ -87,9 +95,9 @@ int main()
             }
             else if(input == 'w')
             {
-                i=fabs((--i)%9);
+                i=abs(9+(--i))%9;
                 while(validity_grid[i][j])
-                    i=abs((--i)%9);
+                    i=(9+(--i))%9;
             }
             temp=grid[i][j];
             cursor_flag=1;
@@ -111,11 +119,13 @@ int main()
         }
         else if(grid[i][j]!=0 && grid[i][j]!=-1)
         {
+            settextstyle(4,HORIZ_DIR,1);
             sprintf(put,"%d",grid[i][j]);
             outtextxy(x+(j*40),y+(i*40),put);
         }
         if(grid[i][j]==0)
-            outtextxy(x+(j*40),y+(i*40)," ");
+            outtextxy(x+(j*40),y+(i*40),"  ");
+
     }
     delay(200000000);
 
@@ -144,4 +154,15 @@ void interfac()
 
     line(20,259,380,259);
     line(20,261,380,261);
+
+    settextstyle(9,HORIZ_DIR,1);
+    outtextxy(400,40,"WELCOME TO SUDOKU");
+    settextstyle(8,HORIZ_DIR,1);
+    outtextxy(400,70,"Cursor movement keys:");
+    outtextxy(400,110,"W to move cursor up");
+    outtextxy(400,140,"S to move cursor down");
+    outtextxy(400,170,"A to move cursor left");
+    outtextxy(400,200,"D to move cursor down");
+    outtextxy(400,230,"Press 1-9 to enter");
+    outtextxy(400,250,"valid value at cursor");
 }
